@@ -26,7 +26,7 @@ class NavigationController() {
     }
 
     fun navigateBack(): Boolean {
-        current.onBlur()
+        current.destory()
         stack.remove(current)
         currentIndex--
         updateCurrentScreen()
@@ -36,6 +36,7 @@ class NavigationController() {
     fun navigateTo(controller: PageController): Boolean {
         stack.add(controller)
         currentIndex++
+        current.onBlur()
         updateCurrentScreen()
         return true
     }

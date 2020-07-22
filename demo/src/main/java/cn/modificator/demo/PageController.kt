@@ -4,6 +4,7 @@ import androidx.annotation.CallSuper
 import androidx.compose.Composable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 
 abstract class PageController:CoroutineScope by MainScope() {
 
@@ -26,6 +27,11 @@ abstract class PageController:CoroutineScope by MainScope() {
 
     open fun navigateBack(): Boolean {
         return navigationController.navigateBack()
+    }
+
+    @CallSuper
+    open fun destory(){
+        cancel()
     }
 
     /**
