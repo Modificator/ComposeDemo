@@ -41,6 +41,12 @@ class NavigationController() {
         return true
     }
 
+    fun setController(controller: PageController){
+        stack.clear()
+        currentIndex=-1
+        navigateTo(controller)
+    }
+
     fun findLastById(id:Int):PageController?{
         return stack.findLast { it->it.getId() == id }
     }
@@ -51,6 +57,10 @@ class NavigationController() {
 
     fun onBackPressed(): Boolean {
         if (stack.last().onBackPressed(false)){
+            return true
+        }
+        if (stack.size>1){
+            navigateBack()
             return true
         }
         return false

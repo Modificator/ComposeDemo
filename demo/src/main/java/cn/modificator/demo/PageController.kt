@@ -30,6 +30,10 @@ abstract class PageController:CoroutineScope by MainScope() {
         return navigationController.navigateBack()
     }
 
+    open fun setController(controller: PageController){
+        navigationController.setController(controller)
+    }
+
     @CallSuper
     open fun destory(){
         cancel()
