@@ -41,6 +41,10 @@ class NavigationController() {
         return true
     }
 
+    fun findLastById(id:Int):PageController?{
+        return stack.findLast { it->it.getId() == id }
+    }
+
     fun updateCurrentScreen(){
         current = stack.get(currentIndex)
     }

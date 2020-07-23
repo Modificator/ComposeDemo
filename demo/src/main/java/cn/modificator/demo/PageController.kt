@@ -8,6 +8,7 @@ import kotlinx.coroutines.cancel
 
 abstract class PageController:CoroutineScope by MainScope() {
 
+    open abstract fun getId():Int
 
     @Composable
     open abstract fun screenContent()
