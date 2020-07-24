@@ -41,7 +41,8 @@ class NavigationController() {
         return true
     }
 
-    fun setController(controller: PageController){
+    fun initController(controller: PageController){
+        stack.forEach { it.destory() }
         stack.clear()
         currentIndex=-1
         navigateTo(controller)

@@ -31,7 +31,7 @@ abstract class PageController:CoroutineScope by MainScope() {
     }
 
     open fun setController(controller: PageController){
-        navigationController.setController(controller)
+        navigationController.initController(controller)
     }
 
     @CallSuper
