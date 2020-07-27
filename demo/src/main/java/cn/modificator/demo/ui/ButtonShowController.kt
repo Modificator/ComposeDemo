@@ -10,9 +10,7 @@ import androidx.ui.foundation.VerticalScroller
 import androidx.ui.layout.*
 import androidx.ui.material.*
 import androidx.ui.material.icons.Icons
-import androidx.ui.material.icons.filled.Close
-import androidx.ui.material.icons.filled.Search
-import androidx.ui.material.icons.filled.Star
+import androidx.ui.material.icons.filled.*
 import androidx.ui.unit.dp
 import cn.modificator.demo.PageController
 
@@ -24,7 +22,11 @@ class ButtonShowController: PageController() {
     @Composable
     override fun screenContent() {
         Scaffold(topBar = {
-            TopAppBar(title = { Text(text = "Button") })
+            TopAppBar(title = { Text(text = "Button") },navigationIcon = {
+                IconButton(onClick = { navigateBack() }) {
+                    Icon(asset = Icons.Filled.ArrowBack)
+                }
+            })
         }) {
             var toggleState by state{false}
             VerticalScroller(modifier = Modifier.fillMaxSize().padding(20.dp)) {
@@ -35,19 +37,19 @@ class ButtonShowController: PageController() {
                 Spacer(modifier = Modifier.size(10.dp))
                 Button(onClick = {}) {
                     Row {
-                        Image(asset = Icons.Filled.Search)       
+                        Image(asset = Icons.Filled.Search)
                         Text(text = "Image Button")
                     }
                 }
                 Spacer(modifier = Modifier.size(10.dp))
                 IconToggleButton(checked = toggleState, onCheckedChange = { toggleState = it } ) {
-                    Icon(asset = if (toggleState) Icons.Filled.Star else Icons.Filled.Close)
+                    Icon(asset = if (toggleState) Icons.Filled.Add else Icons.Filled.Close)
                 }
             }
         }
     }
-    
+
     fun clickToast(){
-        
+
     }
 }
