@@ -31,9 +31,12 @@ class WidgetsDemoController : PageController() {
                 })
         }) {
             VerticalScroller(modifier = Modifier.fillMaxSize()) {
-                Button(onClick = { navigateTo(ButtonShowController()) }) {
-                    Text(text = "Button")
-                }
+                SimpleListItem(title = "Text", onClick = {
+                    navigateTo(ButtonShowController())
+                })
+                SimpleListItem(title = "Button", onClick = {
+                    navigateTo(ButtonShowController())
+                })
             }
         }
     }

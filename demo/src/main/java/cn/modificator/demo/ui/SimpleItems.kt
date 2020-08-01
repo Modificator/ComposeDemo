@@ -7,13 +7,14 @@ import androidx.ui.foundation.Text
 import androidx.ui.foundation.clickable
 import androidx.ui.graphics.Color
 import androidx.ui.layout.*
+import androidx.ui.material.Divider
 import androidx.ui.text.font.FontWeight
 import androidx.ui.unit.TextUnit
 import androidx.ui.unit.dp
 
 @Composable
-fun simpleListItem(title:String,onClick: () -> Unit){
-    Row(modifier = Modifier.fillMaxWidth().height(50.dp).clickable(
+fun SimpleListItem(title:String, onClick: () -> Unit){
+    Column(modifier = Modifier.fillMaxWidth().height(50.dp).clickable(
         onClick = onClick
     )) {
         Text(
@@ -24,5 +25,6 @@ fun simpleListItem(title:String,onClick: () -> Unit){
             modifier = Modifier.fillMaxSize()
                 .wrapContentHeight(Alignment.CenterVertically).padding(12.dp)
         )
+        Divider(Modifier.fillMaxWidth().height(1.dp))
     }
 }
