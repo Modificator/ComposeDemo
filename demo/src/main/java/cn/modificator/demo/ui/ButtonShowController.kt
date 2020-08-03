@@ -6,6 +6,8 @@ import androidx.ui.animation.Transition
 import androidx.ui.animation.animate
 import androidx.ui.core.*
 import androidx.ui.foundation.*
+import androidx.ui.foundation.shape.corner.CutCornerShape
+import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.Color
 import androidx.ui.graphics.ColorFilter
 import androidx.ui.graphics.ImageAsset
@@ -41,24 +43,28 @@ class ButtonShowController : PageController() {
         }) {
             var toggleState by state { false }
             var toggleButtonIndex by state { 0 }
-            VerticalScroller(modifier = Modifier.fillMaxSize().padding(20.dp)) {
-                Spacer(modifier = Modifier.size(10.dp))
+            VerticalScroller(modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp)) {
+                Spacer(modifier = Modifier.size(30.dp))
                 Text(text = "Text button")
+                Spacer(modifier = Modifier.size(5.dp))
                 TextButton(onClick = {}) {
                     Text(text = "Button")
                 }
                 Spacer(modifier = Modifier.size(10.dp))
                 Text(text = "Outlined button")
+                Spacer(modifier = Modifier.size(5.dp))
                 OutlinedButton(onClick = {}) {
                     Text(text = "Button")
                 }
                 Spacer(modifier = Modifier.size(10.dp))
                 Text(text = "Contained button")
+                Spacer(modifier = Modifier.size(5.dp))
                 Button(onClick = { }) {
                     Text(text = "Button")
                 }
                 Spacer(modifier = Modifier.size(10.dp))
                 Text(text = "Toggle button")
+                Spacer(modifier = Modifier.size(5.dp))
                 Row {
                     IconToggleButton(
                         checked = toggleButtonIndex == 0,
@@ -102,6 +108,7 @@ class ButtonShowController : PageController() {
                 }
                 Spacer(modifier = Modifier.size(10.dp))
                 Text(text = "Image button")
+                Spacer(modifier = Modifier.size(5.dp))
                 Button(onClick = {}) {
                     Row(modifier = Modifier.wrapContentSize()) {
                         Image(
@@ -116,15 +123,34 @@ class ButtonShowController : PageController() {
                 }
                 Spacer(modifier = Modifier.size(10.dp))
                 Text(text = "Floating action button")
+                Spacer(modifier = Modifier.size(5.dp))
                 FloatingActionButton(onClick = {}) {
                     Icon(asset = Icons.Default.Add)
                 }
                 Spacer(modifier = Modifier.size(10.dp))
                 Text(text = "Toggle button with animation")
+                Spacer(modifier = Modifier.size(5.dp))
                 IconToggleButton(checked = toggleState, onCheckedChange = { toggleState = it }) {
                     val rotateValue = animate(if (toggleState) 45f else 0f)
                     Icon(asset = Icons.Filled.Add, modifier = Modifier.drawLayer(rotationZ = rotateValue))
                 }
+                Spacer(modifier = Modifier.size(10.dp))
+                Text(text = "RoundedCornerShape")
+                Spacer(modifier = Modifier.size(5.dp))
+                Button(onClick = {},modifier = Modifier.clip(RoundedCornerShape(8.dp))) {
+                    Text(text = "Button")
+                }
+                Spacer(modifier = Modifier.size(6.dp))
+                Button(onClick = {},modifier = Modifier.clip(RoundedCornerShape(100.dp))) {
+                    Text(text = "Button")
+                }
+                Spacer(modifier = Modifier.size(10.dp))
+                Text(text = "CutCornerShape")
+                Spacer(modifier = Modifier.size(5.dp))
+                Button(onClick = {},modifier = Modifier.clip(CutCornerShape(6.dp))) {
+                    Text(text = "Button")
+                }
+                Spacer(modifier = Modifier.size(30.dp))
             }
         }
     }
