@@ -2,11 +2,13 @@ package cn.modificator.demo.ui
 
 import androidx.compose.*
 import androidx.core.view.ViewCompat
+import androidx.ui.animation.Transition
 import androidx.ui.animation.animate
 import androidx.ui.core.*
 import androidx.ui.foundation.*
 import androidx.ui.graphics.Color
 import androidx.ui.graphics.ColorFilter
+import androidx.ui.graphics.ImageAsset
 import androidx.ui.graphics.drawscope.rotate
 import androidx.ui.layout.*
 import androidx.ui.material.*
@@ -118,9 +120,10 @@ class ButtonShowController : PageController() {
                     Icon(asset = Icons.Default.Add)
                 }
                 Spacer(modifier = Modifier.size(10.dp))
+                Text(text = "Toggle button with animation")
                 IconToggleButton(checked = toggleState, onCheckedChange = { toggleState = it }) {
-                    val rotateValue = animate(if (toggleState) 135f else 0f)
-                    Icon(asset = Icons.Filled.Add, modifier = Modifier.drawBehind { rotate(rotateValue){} })
+                    val rotateValue = animate(if (toggleState) 45f else 0f)
+                    Icon(asset = Icons.Filled.Add, modifier = Modifier.drawLayer(rotationZ = rotateValue))
                 }
             }
         }
