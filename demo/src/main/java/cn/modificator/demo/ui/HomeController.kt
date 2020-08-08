@@ -26,7 +26,9 @@ class HomeController : PageController() {
             TopAppBar(title = { Text(text = "Comepose Demo") })
         }) {
             Column(modifier = Modifier.fillMaxSize()) {
-                SimpleListItem(title = "Imitate other Apps", onClick = {})
+                SimpleListItem(title = "Imitate other Apps", onClick = {
+                    navigateTo(ImitateAppController())
+                })
                 SimpleListItem(
                     title = "Widgets Demo",
                     onClick = { navigateTo(WidgetsDemoController()) })

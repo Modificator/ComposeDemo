@@ -3,4 +3,5 @@
     <item name="controller_splash" type="id"/>
     <item name="controller_home" type="id"/>
     <item name="controller_widgetsDemo" type="id"/>
+    <item name="controller_flutterDemo" type="id"/>
 </resources>

@@ -13,9 +13,10 @@ import androidx.ui.material.icons.Icons
 import androidx.ui.material.icons.filled.ArrowBack
 import cn.modificator.demo.PageController
 import cn.modificator.demo.R
+import cn.modificator.demo.ui.imitate.FlutterDemoController
 import cn.modificator.demo.ui.widgets.ButtonShowController
 
-class WidgetsDemoController : PageController() {
+class ImitateAppController : PageController() {
     override fun getId(): Int {
         return R.id.controller_widgetsDemo
     }
@@ -23,7 +24,7 @@ class WidgetsDemoController : PageController() {
     @Composable
     override fun screenContent() {
         Scaffold(topBar = {
-            TopAppBar(title = { Text(text = "Widgets Demo") },
+            TopAppBar(title = { Text(text = "Imitate other Apps") },
                 navigationIcon = {
                     IconButton(onClick = { navigateBack() }) {
                         Icon(asset = Icons.Filled.ArrowBack)
@@ -31,11 +32,8 @@ class WidgetsDemoController : PageController() {
                 })
         }) {
             VerticalScroller(modifier = Modifier.fillMaxSize()) {
-                SimpleListItem(title = "Text", onClick = {
-                    navigateTo(ButtonShowController())
-                })
-                SimpleListItem(title = "Button", onClick = {
-                    navigateTo(ButtonShowController())
+                SimpleListItem(title = "FlutterDemo", onClick = {
+                    navigateTo(FlutterDemoController())
                 })
             }
         }

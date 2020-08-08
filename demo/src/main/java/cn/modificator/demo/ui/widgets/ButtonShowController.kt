@@ -1,4 +1,4 @@
-package cn.modificator.demo.ui
+package cn.modificator.demo.ui.widgets
 
 import androidx.compose.*
 import androidx.core.view.ViewCompat
