@@ -1,5 +1,6 @@
 package cn.modificator.demo.ui.widgets
 
+import android.util.Log
 import android.view.ViewConfiguration
 import androidx.animation.*
 import androidx.compose.Composable
@@ -20,6 +21,9 @@ import androidx.ui.layout.fillMaxSize
 import androidx.ui.util.fastForEach
 import androidx.ui.util.fastMaxBy
 import cn.modificator.demo.PageController
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
 class ViewPagerController : PageController() {
     override fun getId(): Int {
@@ -49,19 +53,32 @@ fun ViewPager(pageCount: Int, modifier: Modifier, pageCreater: @Composable (posi
                 },
                 onDragStopped = { velocity ->
                     val target = ExponentialDecay().getTarget(offset.value,velocity)
-                    val pageOffset = target % width
+                    val pageOffset = target + position.value * width
                     var scrollOffset = 0f
-                    if (pageOffset > width/2f){
-                        scrollOffset = width - pageOffset
-                    }else{
-                        scrollOffset = -pageOffset
+                    if (abs(pageOffset) > width/2f){
+                        if(pageOffset>0){
+                            scrollOffset = -pageOffset
+                            position.value--
+                        }else {
+                            scrollOffset = width - pageOffset
+                            position.value++
+                        }
                     }
-                    offset.animateTo(target+scrollOffset)
+                    position.value = min(position.value,pageCount-1)
+                    position.value = max(position.value,0)
+//                    offset.animateTo(target+scrollOffset)
+                    offset.animateTo(-position.value * width)
                 },
                 onDragDeltaConsumptionRequested = { fl ->
-                    val old = offset.value
-                    offset.snapTo(offset.value + fl)
-                    offset.value - old
+                    if (position.value == pageCount - 1 && fl < 0) {
+                        0f
+                    } else if (position.value == 0 && fl > 0) {
+                        0f
+                    } else {
+                        val old = offset.value
+                        offset.snapTo(offset.value + fl)
+                        offset.value - old
+                    }
                 },
                 enabled = true
         )
