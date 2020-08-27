@@ -5,6 +5,6 @@ import androidx.compose.Composable
 import androidx.compose.onActive
 
 @Composable
-fun ViewPager(){
+fun ViewPager(pageCount:Int,modifier:Modifier){
 
 }
