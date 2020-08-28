@@ -1,17 +1,17 @@
 package cn.modificator.demo.ui
 
-import androidx.compose.Composable
-import androidx.ui.core.Modifier
-import androidx.ui.foundation.AdapterList
-import androidx.ui.foundation.Icon
-import androidx.ui.foundation.Text
-import androidx.ui.foundation.VerticalScroller
-import androidx.ui.layout.fillMaxSize
-import androidx.ui.material.IconButton
-import androidx.ui.material.Scaffold
-import androidx.ui.material.TopAppBar
-import androidx.ui.material.icons.Icons
-import androidx.ui.material.icons.filled.ArrowBack
+import androidx.compose.foundation.Icon
+import androidx.compose.foundation.ScrollableColumn
+import androidx.compose.foundation.ScrollableRow
+import androidx.compose.foundation.Text
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import cn.modificator.demo.PageController
 import cn.modificator.demo.R
 import cn.modificator.demo.ui.imitate.FlutterDemoController
@@ -32,7 +32,7 @@ class ImitateAppController : PageController() {
                     }
                 })
         }) {
-            VerticalScroller(modifier = Modifier.fillMaxSize()) {
+            ScrollableColumn(modifier = Modifier.fillMaxSize()) {
                 SimpleListItem(title = "FlutterDemo", onClick = {
                     navigateTo(FlutterDemoController())
                 })

@@ -1,27 +1,22 @@
 package cn.modificator.demo.ui.imitate
 
-import androidx.compose.Composable
-import androidx.compose.getValue
-import androidx.compose.setValue
-import androidx.compose.state
-import androidx.ui.core.Alignment
-import androidx.ui.core.Modifier
-import androidx.ui.foundation.Icon
-import androidx.ui.foundation.Text
-import androidx.ui.graphics.Color
-import androidx.ui.layout.Arrangement
-import androidx.ui.layout.Column
-import androidx.ui.layout.Row
-import androidx.ui.layout.fillMaxSize
-import androidx.ui.material.FloatingActionButton
-import androidx.ui.material.IconButton
-import androidx.ui.material.Scaffold
-import androidx.ui.material.TopAppBar
-import androidx.ui.material.icons.Icons
-import androidx.ui.material.icons.filled.Add
-import androidx.ui.material.icons.filled.ArrowBack
-import androidx.ui.material.icons.filled.Close
-import androidx.ui.unit.dp
+import androidx.compose.foundation.Icon
+import androidx.compose.foundation.Text
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import cn.modificator.demo.PageController
 import cn.modificator.demo.R
 
@@ -33,7 +28,7 @@ class FlutterDemoController: PageController() {
 
     @Composable
     override fun screenContent() {
-        var _counter by state { 0 }
+        var _counter by mutableStateOf<Int>(0)
 
         Scaffold(topBar = {
             TopAppBar(title = { Text(text = "Welcom to Compose", color = Color.White) }, actions = {
@@ -42,7 +37,7 @@ class FlutterDemoController: PageController() {
                 }
             }, elevation = 4.dp, backgroundColor = Color.Blue)
         }, floatingActionButton = {
-            FloatingActionButton(onClick = { _counter++ }) {
+            FloatingActionButton(onClick = { _counter = 1 }) {
                 Icon(asset = Icons.Default.Add)
             }
         }) {

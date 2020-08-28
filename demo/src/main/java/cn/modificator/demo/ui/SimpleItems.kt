@@ -1,16 +1,16 @@
 package cn.modificator.demo.ui
 
-import androidx.compose.Composable
-import androidx.ui.core.Alignment
-import androidx.ui.core.Modifier
-import androidx.ui.foundation.Text
-import androidx.ui.foundation.clickable
-import androidx.ui.graphics.Color
-import androidx.ui.layout.*
-import androidx.ui.material.Divider
-import androidx.ui.text.font.FontWeight
-import androidx.ui.unit.TextUnit
-import androidx.ui.unit.dp
+import androidx.compose.foundation.Text
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Divider
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun SimpleListItem(title:String, onClick: () -> Unit){

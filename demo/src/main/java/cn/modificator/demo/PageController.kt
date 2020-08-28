@@ -1,7 +1,7 @@
 package cn.modificator.demo
 
 import androidx.annotation.CallSuper
-import androidx.compose.Composable
+import androidx.compose.runtime.Composable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel

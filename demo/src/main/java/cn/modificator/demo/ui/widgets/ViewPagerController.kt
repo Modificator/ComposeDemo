@@ -2,24 +2,21 @@ package cn.modificator.demo.ui.widgets
 
 import android.util.Log
 import android.view.ViewConfiguration
-import androidx.animation.*
-import androidx.compose.Composable
-import androidx.compose.remember
-import androidx.compose.state
+import androidx.compose.animation.animatedFloat
+import androidx.compose.animation.core.ExponentialDecay
+import androidx.compose.foundation.Box
+import androidx.compose.foundation.Text
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.state
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Layout
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.WithConstraints
 import androidx.core.view.ViewCompat
-import androidx.ui.animation.animatedFloat
-import androidx.ui.core.*
-import androidx.ui.foundation.*
-import androidx.ui.foundation.animation.FlingConfig
-import androidx.ui.foundation.gestures.DragDirection
-import androidx.ui.foundation.gestures.ScrollableState
-import androidx.ui.foundation.gestures.draggable
-import androidx.ui.foundation.gestures.scrollable
-import androidx.ui.layout.Arrangement
-import androidx.ui.layout.Column
-import androidx.ui.layout.fillMaxSize
-import androidx.ui.util.fastForEach
-import androidx.ui.util.fastMaxBy
 import cn.modificator.demo.PageController
 import kotlin.math.abs
 import kotlin.math.max
@@ -43,7 +40,7 @@ class ViewPagerController : PageController() {
 
 @Composable
 fun ViewPager(pageCount: Int, modifier: Modifier, pageCreater: @Composable (position: Int) -> Unit) {
-    WithConstraints {
+    /*WithConstraints {
         val offset = animatedFloat(initVal = 0f)
         val position = state { 0 }
         val width = constraints.maxWidth.toFloat()
@@ -105,5 +102,5 @@ fun ViewPager(pageCount: Int, modifier: Modifier, pageCreater: @Composable (posi
             })
 
         }
-    }
+    }*/
 }

@@ -1,6 +1,6 @@
 package cn.modificator.demo
 
-import androidx.compose.Composable
+import androidx.compose.runtime.Composable
 import androidx.ui.tooling.preview.Preview
 import cn.modificator.demo.theme.DemoTheme
 

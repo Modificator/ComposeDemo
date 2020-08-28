@@ -1,9 +1,13 @@
 package cn.modificator.demo
 
-import androidx.animation.TweenBuilder
 import androidx.compose.*
-import androidx.ui.animation.Crossfade
-import androidx.ui.material.Surface
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
+import androidx.compose.material.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.ui.tooling.preview.Preview
 import cn.modificator.demo.ui.SplashController
 
@@ -17,7 +21,7 @@ class NavigationController() {
     @Preview
     @Composable
     fun viewContent() {
-        Crossfade(current = current,animation = TweenBuilder()) {
+        Crossfade(current = current,animation = tween(), ) {
             Surface {
                 it.screenContent()
                 it.onFocus()

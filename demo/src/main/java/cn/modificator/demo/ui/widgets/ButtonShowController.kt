@@ -1,23 +1,25 @@
 package cn.modificator.demo.ui.widgets
 
 import androidx.compose.*
+import androidx.compose.animation.animate
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawOpacity
+import androidx.compose.ui.drawLayer
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
-import androidx.ui.animation.Transition
-import androidx.ui.animation.animate
-import androidx.ui.core.*
-import androidx.ui.foundation.*
-import androidx.ui.foundation.shape.corner.CutCornerShape
-import androidx.ui.foundation.shape.corner.RoundedCornerShape
-import androidx.ui.graphics.Color
-import androidx.ui.graphics.ColorFilter
-import androidx.ui.graphics.ImageAsset
-import androidx.ui.graphics.drawscope.rotate
-import androidx.ui.layout.*
-import androidx.ui.material.*
-import androidx.ui.material.icons.Icons
-import androidx.ui.material.icons.filled.*
 import androidx.ui.tooling.preview.Preview
-import androidx.ui.unit.dp
 import cn.modificator.demo.PageController
 
 class ButtonShowController : PageController() {
@@ -41,9 +43,9 @@ class ButtonShowController : PageController() {
                 }
             })
         }) {
-            var toggleState by state { false }
-            var toggleButtonIndex by state { 0 }
-            VerticalScroller(modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp)) {
+            var toggleState by mutableStateOf<Boolean>(false)
+            var toggleButtonIndex by mutableStateOf<Int>(0)
+            ScrollableColumn(modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp)) {
                 Spacer(modifier = Modifier.size(30.dp))
                 Text(text = "Text button")
                 Spacer(modifier = Modifier.size(5.dp))
