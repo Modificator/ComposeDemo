@@ -5,10 +5,7 @@ import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
@@ -28,7 +25,7 @@ class FlutterDemoController: PageController() {
 
     @Composable
     override fun screenContent() {
-        var _counter by mutableStateOf<Int>(0)
+        var _counter by remember { mutableStateOf(0) }
 
         Scaffold(topBar = {
             TopAppBar(title = { Text(text = "Welcom to Compose", color = Color.White) }, actions = {
@@ -37,7 +34,7 @@ class FlutterDemoController: PageController() {
                 }
             }, elevation = 4.dp, backgroundColor = Color.Blue)
         }, floatingActionButton = {
-            FloatingActionButton(onClick = { _counter = 1 }) {
+            FloatingActionButton(onClick = { _counter++ }) {
                 Icon(asset = Icons.Default.Add)
             }
         }) {
