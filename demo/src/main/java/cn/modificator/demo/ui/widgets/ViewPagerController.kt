@@ -12,10 +12,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.state
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Layout
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.WithConstraints
+import androidx.compose.ui.*
+import androidx.compose.ui.gesture.scrollorientationlocking.Orientation
+import androidx.compose.ui.layout.id
+import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.util.fastForEach
+import androidx.compose.ui.util.fastMaxBy
 import androidx.core.view.ViewCompat
 import cn.modificator.demo.PageController
 import kotlin.math.abs
@@ -40,12 +42,12 @@ class ViewPagerController : PageController() {
 
 @Composable
 fun ViewPager(pageCount: Int, modifier: Modifier, pageCreater: @Composable (position: Int) -> Unit) {
-    /*WithConstraints {
+    WithConstraints {
         val offset = animatedFloat(initVal = 0f)
         val position = state { 0 }
         val width = constraints.maxWidth.toFloat()
         val draggable = modifier.draggable(
-                dragDirection = DragDirection.Horizontal,
+                orientation = Orientation.Horizontal,
                 onDragStarted = {
                 },
                 onDragStopped = { velocity ->
@@ -66,7 +68,7 @@ fun ViewPager(pageCount: Int, modifier: Modifier, pageCreater: @Composable (posi
 //                    offset.animateTo(target+scrollOffset)
                     offset.animateTo(-position.value * width)
                 },
-                onDragDeltaConsumptionRequested = { fl ->
+                onDrag = { fl ->
                     if (position.value == pageCount - 1 && fl < 0) {
                         0f
                     } else if (position.value == 0 && fl > 0) {
@@ -82,12 +84,12 @@ fun ViewPager(pageCount: Int, modifier: Modifier, pageCreater: @Composable (posi
         Box(draggable) {
             Layout(children = {
                 for (i in 0 until pageCount) {
-                    Box(Modifier.tag(i)){
+                    Box(Modifier.layoutId(i)){
                         pageCreater(i)
                     }
                 }
-            }, measureBlock = { list, constraints, layoutDirection ->
-                val placeables = list.map { it.measure(constraints) to it.tag }
+            }, measureBlock ={ list, constraints ->
+                val placeables = list.map { it.measure(constraints) to it.id }
                 val height = placeables.fastMaxBy { it.first.height }?.first?.height ?: 0
                 layout(constraints.maxWidth, height) {
                     placeables.fastForEach {(placeable, tag) ->
@@ -102,5 +104,5 @@ fun ViewPager(pageCount: Int, modifier: Modifier, pageCreater: @Composable (posi
             })
 
         }
-    }*/
+    }
 }
