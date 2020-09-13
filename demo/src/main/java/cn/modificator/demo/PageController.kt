@@ -47,3 +47,14 @@ abstract class PageController:CoroutineScope by MainScope() {
         return false
     }
 }
+
+class EmptyPage: PageController() {
+    override fun getId(): Int {
+        return 0
+    }
+
+    @Composable
+    override fun screenContent() {
+
+    }
+}
