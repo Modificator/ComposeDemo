@@ -13,10 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.offsetPx
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Layout
 import androidx.compose.ui.MeasureBlock
 import androidx.compose.ui.Modifier
@@ -36,14 +33,20 @@ import kotlin.math.min
 @Composable
 fun navigationWrapper(current:NavigationMode,modifier: Modifier= Modifier){
     WithConstraints(modifier = modifier.fillMaxSize()) {
-        var state = remember<PageController> { EmptyPage() }
+//        var state by mutableStateOf<PageController>(EmptyPage())
+        val state = remember { NavigationState() }
         val swipeOffset = mutableStateOf(0f)
         val swipeOffset2 = animatedFloat(0f)
         val minValue = 0f
         val maxValue = constraints.maxWidth.toFloat()
 //        val anchors = mapOf(minValue to 0,maxValue to 1)
         val anchors = mapOf(minValue to DrawerValue.Closed, maxValue to DrawerValue.Open)
-        var left = state
+        if (state.current==null){
+            state.current = current.current
+            state.current!!.screenContent()
+            return@WithConstraints
+        }
+        var left = state.current!!
         var right = current.current!!
         var autoAnimTargetValue = minValue
         var autoAnimStartValue = maxValue
@@ -52,18 +55,23 @@ fun navigationWrapper(current:NavigationMode,modifier: Modifier= Modifier){
             autoAnimTargetValue = maxValue
             autoAnimStartValue = minValue
         }
-        if (current.current == state){
-
-        }else{
+        if (left == right){
+            return@WithConstraints
+        }else if (left == null){
+            state.current = current.current
+            state.current!!.screenContent()
+            return@WithConstraints
+        }else
+        {
             if(current is NavigationMode.Backward) {
                 swipeOffset2.snapTo(minValue)
             }else{
                 swipeOffset2.snapTo(autoAnimStartValue)
             }
         }
-        state = current.current!!
-        state.screenContent()
-        return@WithConstraints
+//        state = current.current!!
+//        state.screenContent()
+//        return@WithConstraints
 
         Stack(Modifier.draggable(
             orientation = Orientation.Horizontal,
@@ -82,7 +90,7 @@ fun navigationWrapper(current:NavigationMode,modifier: Modifier= Modifier){
 //                swipeOffset.value = animate(swipeOffset.value,targetValue,endListener = { bounds: Bounds ->
 
                 swipeOffset2.animateTo(targetValue, onEnd = { _, _ ->
-                    state = current.current!!
+                    state.current = current.current!!
                 })
             }
         )) {
@@ -112,7 +120,10 @@ fun navigationWrapper(current:NavigationMode,modifier: Modifier= Modifier){
             })
         }
         swipeOffset2.animateTo(autoAnimTargetValue, onEnd = { _, _ ->
-            state = current.current!!
+            state.current = current.current!!
         })
     }
+}
+private class NavigationState{
+    var current:PageController?=null
 }
