@@ -14,9 +14,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Layout
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.WithConstraints
+import androidx.compose.ui.draw.drawShadow
 import androidx.compose.ui.gesture.scrollorientationlocking.Orientation
 import androidx.compose.ui.layout.id
 import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.util.fastForEach
 import androidx.compose.ui.util.fastMaxBy
 import kotlin.math.max
@@ -37,6 +39,9 @@ fun navigationWrapper(current: NavigationMode, modifier: Modifier = Modifier) {
         var right: PageController? = null
         if (state.current == null) {
             state.current = current.current
+            return@WithConstraints
+        }
+        if (state.current == current.current){
             return@WithConstraints
         }
         left = state.current!!
@@ -102,22 +107,17 @@ fun navigationWrapper(current: NavigationMode, modifier: Modifier = Modifier) {
 
             Layout(children = {
                 Box(Modifier.layoutId(0)) { left?.screenContent() }
-                Box(Modifier.layoutId(1)) { right?.screenContent() }
+                Box(Modifier.layoutId(1).drawShadow(Dp(8f))) { right?.screenContent() }
             }, measureBlock = { list, constraints ->
                 val placeables = list.map { it.measure(constraints) to it.id }
                 val height = placeables.fastMaxBy { it.first.height }?.first?.height ?: 0
                 layout(constraints.maxWidth, height) {
                     placeables.fastForEach { (placeable, tag) ->
-                        Log.e("=======", "value:${swipeOffset2.value}")
                         if (tag is Int) {
-                            Log.e(
-                                "=======",
-                                "page:$tag offset:${constraints.maxWidth * (tag - 1) + swipeOffset2.value.toInt()}"
-                            )
                             placeable.place(
 //                                x = constraints.maxWidth * tag + swipeOffset2.value.toInt(),
                                 x = if (tag == 0) {
-                                    ((constraints.maxWidth + swipeOffset2.value * 1f) * 0.3f).toInt()
+                                    ((-constraints.maxWidth + swipeOffset2.value * 1f) * 0.3f).toInt()
                                 } else {
                                     swipeOffset2.value.toInt()
                                 },
