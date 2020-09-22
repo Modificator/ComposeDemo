@@ -1,5 +1,6 @@
 package cn.modificator.demo
 
+import android.util.Log
 import androidx.compose.animation.animate
 import androidx.compose.animation.animatedFloat
 import androidx.compose.animation.animatedValue
@@ -36,50 +37,58 @@ fun navigationWrapper(current:NavigationMode,modifier: Modifier= Modifier){
 //        var state by mutableStateOf<PageController>(EmptyPage())
         val state = remember { NavigationState() }
         val swipeOffset = mutableStateOf(0f)
-        val swipeOffset2 = animatedFloat(0f)
+        val swipeOffset2 = animatedFloat(0f,)
         val minValue = 0f
         val maxValue = constraints.maxWidth.toFloat()
 //        val anchors = mapOf(minValue to 0,maxValue to 1)
         val anchors = mapOf(minValue to DrawerValue.Closed, maxValue to DrawerValue.Open)
+        var left :PageController?=null
+        var right :PageController?=null
         if (state.current==null){
             state.current = current.current
-            state.current!!.screenContent()
             return@WithConstraints
         }
-        var left = state.current!!
-        var right = current.current!!
-        var autoAnimTargetValue = minValue
-        var autoAnimStartValue = maxValue
-        if(current is NavigationMode.Backward){
-            left = right.also { right = left }
-            autoAnimTargetValue = maxValue
-            autoAnimStartValue = minValue
-        }
-        if (left == right){
-            return@WithConstraints
-        }else if (left == null){
-            state.current = current.current
-            state.current!!.screenContent()
-            return@WithConstraints
-        }else
-        {
-            if(current is NavigationMode.Backward) {
-                swipeOffset2.snapTo(minValue)
-            }else{
-                swipeOffset2.snapTo(autoAnimStartValue)
+        left = state.current!!
+        right = current.current!!
+        onCommit(v1 = current, callback = {
+
+            var autoAnimTargetValue = minValue
+            var autoAnimStartValue = maxValue
+            if(current is NavigationMode.Backward){
+                left = right.also { right = left }
+                autoAnimTargetValue = maxValue
+                autoAnimStartValue = minValue
             }
-        }
+            if (left == right){
+                return@onCommit
+            }else if (left == null){
+                state.current = current.current
+                return@onCommit
+            }else
+            {
+                if(current is NavigationMode.Backward) {
+                    swipeOffset2.snapTo(minValue)
+                }else{
+                    swipeOffset2.snapTo(autoAnimStartValue)
+                }
+            }
+            swipeOffset2.animateTo(autoAnimTargetValue, onEnd = { _, _ ->
+                Log.e("=======","onEnd:${swipeOffset2.value}")
+                state.current = current.current!!
+            })
+        })
 //        state = current.current!!
 //        state.screenContent()
 //        return@WithConstraints
 
-        Stack(Modifier.draggable(
+        Box(Modifier.draggable(
+            enabled = true,
             orientation = Orientation.Horizontal,
             onDrag = { fl ->
-                val old = swipeOffset.value
-                swipeOffset.value = min(max((swipeOffset.value + fl),minValue),maxValue)
-                swipeOffset2.snapTo(swipeOffset.value)
-                swipeOffset.value - old
+                Log.e("=======","ondrag:$fl ${swipeOffset2.value}")
+                val old = swipeOffset2.value
+                swipeOffset2.snapTo(min(max((swipeOffset2.value + fl),minValue),maxValue))
+                swipeOffset2.value - old
             },
             onDragStopped = { velocity ->
                 val targetValue = if (ExponentialDecay().getTarget(
@@ -102,16 +111,19 @@ fun navigationWrapper(current:NavigationMode,modifier: Modifier= Modifier){
             }*/
 
             Layout(children = {
-               Box(Modifier.layoutId(0)){left.screenContent()}
-               Box(Modifier.layoutId(1)){right.screenContent()}
+               Box(Modifier.layoutId(0)){left?.screenContent()}
+               Box(Modifier.layoutId(1)){right?.screenContent()}
             }, measureBlock ={ list, constraints ->
                 val placeables = list.map { it.measure(constraints) to it.id }
                 val height = placeables.fastMaxBy { it.first.height }?.first?.height ?: 0
                 layout(constraints.maxWidth, height) {
                     placeables.fastForEach {(placeable, tag) ->
+                        Log.e("=======","value:${swipeOffset2.value}")
                         if (tag is Int) {
+                            Log.e("=======","page:$tag offset:${constraints.maxWidth * (tag-1) + swipeOffset2.value.toInt()}")
                             placeable.place(
-                                x = constraints.maxWidth * tag + swipeOffset2.value.toInt(),
+//                                x = constraints.maxWidth * tag + swipeOffset2.value.toInt(),
+                                x = constraints.maxWidth * (tag-1) + swipeOffset2.value.toInt(),
                                 y = 0
                             )
                         }
@@ -119,9 +131,6 @@ fun navigationWrapper(current:NavigationMode,modifier: Modifier= Modifier){
                 }
             })
         }
-        swipeOffset2.animateTo(autoAnimTargetValue, onEnd = { _, _ ->
-            state.current = current.current!!
-        })
     }
 }
 private class NavigationState{

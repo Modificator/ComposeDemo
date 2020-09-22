@@ -16,7 +16,7 @@ val navigationController = NavigationController()
 class NavigationController() {
     //    @Composable
     private val stack = arrayListOf<PageController>(SplashController())
-    private var current: NavigationMode by mutableStateOf(NavigationMode.Rebase(HomeController()))//:ScreenController by state<ScreenController>{ SplashController() }
+    private var current: NavigationMode by mutableStateOf(NavigationMode.Rebase(EmptyPage()))//:ScreenController by state<ScreenController>{ SplashController() }
     private var currentIndex=0
     @Preview
     @Composable
