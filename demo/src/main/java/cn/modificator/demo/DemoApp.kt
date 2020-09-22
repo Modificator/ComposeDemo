@@ -20,7 +20,7 @@ fun DemoApp() {
 fun AppContent() {
     navigationController.viewContent()
     launchInComposition(block = {
-        delay(5000)
+        delay(100)
 //        navigationController.initController(SplashController())
         navigationController.initController(HomeController())
     })
