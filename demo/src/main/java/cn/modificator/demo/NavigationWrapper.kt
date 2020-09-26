@@ -3,12 +3,12 @@ package cn.modificator.demo
 import android.util.Log
 import androidx.compose.animation.animatedFloat
 import androidx.compose.animation.core.ExponentialDecay
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Box
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.DrawerValue
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.onCommit
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Layout
@@ -29,12 +29,9 @@ fun navigationWrapper(current: NavigationMode, modifier: Modifier = Modifier) {
     WithConstraints(modifier = modifier.fillMaxSize()) {
 //        var state by mutableStateOf<PageController>(EmptyPage())
         val state = remember { NavigationState() }
-        val swipeOffset = mutableStateOf(0f)
-        val swipeOffset2 = animatedFloat(0f)
+        val swipeOffset = animatedFloat(0f)
         val minValue = 0f
         val maxValue = constraints.maxWidth.toFloat()
-//        val anchors = mapOf(minValue to 0,maxValue to 1)
-        val anchors = mapOf(minValue to DrawerValue.Closed, maxValue to DrawerValue.Open)
         var left: PageController? = null
         var right: PageController? = null
         if (state.current == null) {
@@ -62,15 +59,15 @@ fun navigationWrapper(current: NavigationMode, modifier: Modifier = Modifier) {
                 return@onCommit
             } else {
                 if (current is NavigationMode.Backward) {
-                    swipeOffset2.snapTo(minValue)
+                    swipeOffset.snapTo(minValue)
                 } else {
-                    swipeOffset2.snapTo(autoAnimStartValue)
+                    swipeOffset.snapTo(autoAnimStartValue)
                 }
             }
-            swipeOffset2.animateTo(autoAnimTargetValue, onEnd = { _, _ ->
-                Log.e("=======", "onEnd:${swipeOffset2.value}")
+            swipeOffset.animateTo(autoAnimTargetValue, onEnd = { _, _ ->
+                Log.e("=======", "onEnd:${swipeOffset.value}")
                 state.current = current.current!!
-            })
+            },anim = tween(400))
         })
 //        state = current.current!!
 //        state.screenContent()
@@ -80,10 +77,10 @@ fun navigationWrapper(current: NavigationMode, modifier: Modifier = Modifier) {
             enabled = true,
             orientation = Orientation.Horizontal,
             onDrag = { fl ->
-                Log.e("=======", "ondrag:$fl ${swipeOffset2.value}")
-                val old = swipeOffset2.value
-                swipeOffset2.snapTo(min(max((swipeOffset2.value + fl), minValue), maxValue))
-                swipeOffset2.value - old
+                Log.e("=======", "ondrag:$fl ${swipeOffset.value}")
+                val old = swipeOffset.value
+                swipeOffset.snapTo(min(max((swipeOffset.value + fl), minValue), maxValue))
+                swipeOffset.value - old
             },
             onDragStopped = { velocity ->
                 val targetValue = if (ExponentialDecay().getTarget(
@@ -91,9 +88,7 @@ fun navigationWrapper(current: NavigationMode, modifier: Modifier = Modifier) {
                         velocity
                     ) > maxValue / 2f
                 ) maxValue else minValue
-//                swipeOffset.value = animate(swipeOffset.value,targetValue,endListener = { bounds: Bounds ->
-
-                swipeOffset2.animateTo(targetValue, onEnd = { _, _ ->
+                swipeOffset.animateTo(targetValue, onEnd = { _, _ ->
                     state.current = current.current!!
                 })
             }
@@ -115,11 +110,10 @@ fun navigationWrapper(current: NavigationMode, modifier: Modifier = Modifier) {
                     placeables.fastForEach { (placeable, tag) ->
                         if (tag is Int) {
                             placeable.place(
-//                                x = constraints.maxWidth * tag + swipeOffset2.value.toInt(),
                                 x = if (tag == 0) {
-                                    ((-constraints.maxWidth + swipeOffset2.value * 1f) * 0.3f).toInt()
+                                    ((-constraints.maxWidth + swipeOffset.value * 1f) * 0.3f).toInt()
                                 } else {
-                                    swipeOffset2.value.toInt()
+                                    swipeOffset.value.toInt()
                                 },
                                 y = 0
                             )
