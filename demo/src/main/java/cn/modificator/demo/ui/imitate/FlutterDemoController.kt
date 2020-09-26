@@ -38,7 +38,7 @@ class FlutterDemoController: PageController() {
                 Icon(asset = Icons.Default.Add)
             }
         }) {
-            Column(verticalArrangement = Arrangement.Center,horizontalGravity = Alignment.CenterHorizontally,modifier = Modifier.fillMaxSize()) {
+            Column(verticalArrangement = Arrangement.Center,horizontalAlignment = Alignment.CenterHorizontally,modifier = Modifier.fillMaxSize()) {
                 Text(
                     text ="You have pushed the button this many times:"
                 )

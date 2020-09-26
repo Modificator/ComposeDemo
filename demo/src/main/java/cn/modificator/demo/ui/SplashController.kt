@@ -27,7 +27,7 @@ class SplashController : PageController() {
             Row(
                 Modifier.fillMaxSize(),
                 horizontalArrangement = Arrangement.Center,
-                verticalGravity = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text("Splash",fontSize = 30.sp)
             }

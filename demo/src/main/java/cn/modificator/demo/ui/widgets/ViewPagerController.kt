@@ -32,7 +32,7 @@ class ViewPagerController : PageController() {
     @Composable
     override fun screenContent() {
         ViewPager(pageCount = 10, modifier = Modifier.fillMaxSize()) {
-            Column(modifier = Modifier.fillMaxSize(),verticalArrangement = Arrangement.Center, horizontalGravity = Alignment.CenterHorizontally) {
+            Column(modifier = Modifier.fillMaxSize(),verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(text = "Position $it")
             }
         }
