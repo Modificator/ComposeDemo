@@ -21,7 +21,7 @@ class NavigationController() {
     @Preview
     @Composable
     fun viewContent() {
-        navigationWrapper(current = current)
+        navigationWrapper(current = current,stack = stack)
     }
 
     fun navigateBack(): Boolean {

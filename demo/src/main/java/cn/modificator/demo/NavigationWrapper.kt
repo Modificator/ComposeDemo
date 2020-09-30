@@ -7,8 +7,8 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Box
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.DrawerValue
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.onCommit
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Layout
@@ -25,15 +25,15 @@ import kotlin.math.max
 import kotlin.math.min
 
 @Composable
-fun navigationWrapper(current: NavigationMode, modifier: Modifier = Modifier) {
+fun navigationWrapper(current: NavigationMode,stack: NavigationStack, modifier: Modifier = Modifier) {
     WithConstraints(modifier = modifier.fillMaxSize()) {
 //        var state by mutableStateOf<PageController>(EmptyPage())
         val state = remember { NavigationState() }
         val swipeOffset = animatedFloat(0f)
         val minValue = 0f
         val maxValue = constraints.maxWidth.toFloat()
-        var left: PageController? = null
-        var right: PageController? = null
+        var left = mutableStateOf<PageController?>(null)
+        var right = mutableStateOf<PageController?>(null)
         if (state.current == null) {
             state.current = current.current
             return@WithConstraints
@@ -41,33 +41,39 @@ fun navigationWrapper(current: NavigationMode, modifier: Modifier = Modifier) {
         if (state.current == current.current){
             return@WithConstraints
         }
-        left = state.current!!
-        right = current.current!!
+        left.value = state.current!!
+        right.value = current.current!!
         onCommit(v1 = current, callback = {
-
-            var autoAnimTargetValue = minValue
-            var autoAnimStartValue = maxValue
-            if (current is NavigationMode.Backward) {
-                left = right.also { right = left }
-                autoAnimTargetValue = maxValue
-                autoAnimStartValue = minValue
-            }
-            if (left == right) {
-                return@onCommit
-            } else if (left == null) {
-                state.current = current.current
-                return@onCommit
-            } else {
-                if (current is NavigationMode.Backward) {
-                    swipeOffset.snapTo(minValue)
-                } else {
-                    swipeOffset.snapTo(autoAnimStartValue)
+            var autoAnimTargetValue = 0f
+            var autoAnimStartValue = 0f
+            when (current) {
+                is NavigationMode.Backward ->{
+                    left.value = right.value.also { right.value= left.value }
+                    autoAnimTargetValue = maxValue
+                    autoAnimStartValue = minValue
+                }
+                is NavigationMode.Forward ->{
+//                    left.value = right.value
+//                    right.value = current.current
+                    autoAnimTargetValue = minValue
+                    autoAnimStartValue = maxValue
                 }
             }
+            swipeOffset.snapTo(autoAnimStartValue)
             swipeOffset.animateTo(autoAnimTargetValue, onEnd = { _, _ ->
                 Log.e("=======", "onEnd:${swipeOffset.value}")
-                state.current = current.current!!
-            },anim = tween(400))
+                when (current) {
+                    is NavigationMode.Forward -> {
+                        state.current = current.current!!
+                    }
+                    is NavigationMode.Backward -> {
+                        stack.removeLast()
+                        state.current = left.value
+                        right.value = left.value
+                        left.value = stack.getPrevious()
+                    }
+                }
+            }, anim = tween(400))
         })
 //        state = current.current!!
 //        state.screenContent()
@@ -89,7 +95,15 @@ fun navigationWrapper(current: NavigationMode, modifier: Modifier = Modifier) {
                     ) > maxValue / 2f
                 ) maxValue else minValue
                 swipeOffset.animateTo(targetValue, onEnd = { _, _ ->
-                    state.current = current.current!!
+                    if (targetValue == 0f){
+//                        state.current = right
+                    }else{
+                        stack.removeLast()
+                        state.current = left.value
+                        right.value = left.value
+                        left.value = stack.getPrevious()
+                    }
+                    swipeOffset.snapTo(0f)
                 })
             }
         )) {
@@ -101,8 +115,8 @@ fun navigationWrapper(current: NavigationMode, modifier: Modifier = Modifier) {
             }*/
 
             Layout(children = {
-                Box(Modifier.layoutId(0)) { left?.screenContent() }
-                Box(Modifier.layoutId(1).drawShadow(Dp(8f))) { right?.screenContent() }
+                Box(Modifier.layoutId(0)) { left.value?.screenContent() }
+                Box(Modifier.layoutId(1).drawShadow(Dp(8f))) { right.value?.screenContent() }
             }, measureBlock = { list, constraints ->
                 val placeables = list.map { it.measure(constraints) to it.id }
                 val height = placeables.fastMaxBy { it.first.height }?.first?.height ?: 0
