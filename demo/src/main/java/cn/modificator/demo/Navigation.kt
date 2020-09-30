@@ -15,7 +15,7 @@ val navigationController = NavigationController()
 
 class NavigationController() {
     //    @Composable
-    private val stack = arrayListOf<PageController>(SplashController())
+    private val stack = NavigationStack()
     private var current: NavigationMode by mutableStateOf(NavigationMode.Rebase(EmptyPage()))//:ScreenController by state<ScreenController>{ SplashController() }
     private var currentIndex=0
     @Preview
@@ -25,39 +25,34 @@ class NavigationController() {
     }
 
     fun navigateBack(): Boolean {
-        stack.remove(current.current)
-        currentIndex--
-        current = NavigationMode.Backward(stack.last())
+        stack.getPrevious()?.let {
+            current = NavigationMode.Backward(it)
+        }
         return true
     }
 
     fun navigateTo(controller: PageController): Boolean {
-        stack.add(controller)
-        currentIndex++
-        current = NavigationMode.Forward(stack.last())
+        stack.push(controller,true)
+        current = NavigationMode.Forward(controller)
         return true
     }
 
     fun initController(controller: PageController){
-        stack.forEach { it.destory() }
         stack.clear()
-        currentIndex=-1
-        navigateTo(controller)
+        stack.push(controller,true)
+        current = NavigationMode.Rebase(current = controller)
     }
 
     fun findLastById(id: Int):PageController?{
-        return stack.findLast { it->it.getId() == id }
-    }
-
-    fun updateCurrentScreen(){
-//        current = stack.get(currentIndex)
+        return stack.findLastById(id)
     }
 
     fun onBackPressed(): Boolean {
-        if (stack.last().onBackPressed(false)){
+        val page = stack.getCurrent()
+        if(page?.onBackPressed(false) == true){
             return true
         }
-        if (stack.size>1){
+        if (stack.size()>1){
             navigateBack()
             return true
         }
