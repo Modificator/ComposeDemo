@@ -7,6 +7,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import cn.modificator.demo.PageController
 import cn.modificator.demo.R
 
@@ -18,7 +19,7 @@ class HomeController : PageController() {
     @Composable
     override fun screenContent() {
         Scaffold(topBar = {
-            TopAppBar(title = { Text(text = "Comepose Demo") })
+            TopAppBar(title = { Text(text = "Comepose Demo") }, elevation = 4.dp)
         }) {
             Column(modifier = Modifier.fillMaxSize()) {
                 SimpleListItem(title = "Imitate other Apps", onClick = {

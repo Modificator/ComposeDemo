@@ -1,6 +1,7 @@
 package cn.modificator.demo
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedTask
 import androidx.compose.runtime.launchInComposition
 import androidx.ui.tooling.preview.Preview
 import cn.modificator.demo.theme.DemoTheme
@@ -19,7 +20,7 @@ fun DemoApp() {
 @Composable
 fun AppContent() {
     navigationController.viewContent()
-    launchInComposition(block = {
+    LaunchedTask(block = {
         delay(100)
 //        navigationController.initController(SplashController())
         navigationController.initController(HomeController())

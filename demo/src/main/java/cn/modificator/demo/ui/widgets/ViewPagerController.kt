@@ -1,24 +1,26 @@
 package cn.modificator.demo.ui.widgets
 
-import android.util.Log
-import android.view.ViewConfiguration
 import androidx.compose.animation.animatedFloat
 import androidx.compose.animation.core.ExponentialDecay
-import androidx.compose.foundation.Box
 import androidx.compose.foundation.Text
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.state
-import androidx.compose.ui.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Layout
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.WithConstraints
 import androidx.compose.ui.gesture.scrollorientationlocking.Orientation
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.id
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.util.fastForEach
 import androidx.compose.ui.util.fastMaxBy
-import androidx.core.view.ViewCompat
 import cn.modificator.demo.PageController
 import kotlin.math.abs
 import kotlin.math.max
@@ -31,9 +33,11 @@ class ViewPagerController : PageController() {
 
     @Composable
     override fun screenContent() {
-        ViewPager(pageCount = 10, modifier = Modifier.fillMaxSize()) {
-            Column(modifier = Modifier.fillMaxSize(),verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "Position $it")
+        Box(Modifier.background(Color.White)) {
+            ViewPager(pageCount = 10, modifier = Modifier.fillMaxSize()) {
+                Column(modifier = Modifier.fillMaxSize(),verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(text = "Position $it")
+                }
             }
         }
     }
