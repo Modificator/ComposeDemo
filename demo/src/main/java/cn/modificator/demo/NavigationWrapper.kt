@@ -33,8 +33,8 @@ fun navigationWrapper(current: NavigationMode,stack: NavigationStack, modifier: 
         val swipeOffset = animatedFloat(0f)
         val minValue = 0f
         val maxValue = constraints.maxWidth.toFloat()
-        var left = mutableStateOf<PageController?>(null)
-        var right = mutableStateOf<PageController?>(null)
+        val left = mutableStateOf<PageController?>(null)
+        val right = mutableStateOf<PageController?>(null)
         if (state.current == null) {
             state.current = current.current
             return@WithConstraints
@@ -73,7 +73,6 @@ fun navigationWrapper(current: NavigationMode,stack: NavigationStack, modifier: 
             swipeOffset.snapTo(autoAnimStartValue)
             isAnimating = true
             swipeOffset.animateTo(autoAnimTargetValue, onEnd = { _, _ ->
-                Log.e("=======", "onEnd:${swipeOffset.value}")
                 when (current) {
                     is NavigationMode.Forward -> {
                     }
@@ -87,13 +86,13 @@ fun navigationWrapper(current: NavigationMode,stack: NavigationStack, modifier: 
                 state.current = current.current!!
                 swipeOffset.snapTo(0f)
                 isAnimating = false
-            }, anim = tween(2400))
+            }, anim = tween(400))
         })
 
         Box(Modifier.draggable(
             enabled = !isAnimating,
             orientation = Orientation.Horizontal,
-            canDrag = { stack.size() > 1 },
+            canDrag = { stack.size() > 1 && !isAnimating },
             onDrag = { fl ->
                 val old = swipeOffset.value
                 swipeOffset.snapTo(min(max((swipeOffset.value + fl), minValue), maxValue))
@@ -120,13 +119,6 @@ fun navigationWrapper(current: NavigationMode,stack: NavigationStack, modifier: 
                 })
             }
         )) {
-            /*Stack(modifier = Modifier.offsetPx(x=swipeOffset)) {
-                left.screenContent()
-            }
-            Stack(modifier = Modifier.offsetPx(x=swipeOffset)) {
-                right.screenContent()
-            }*/
-
             Layout(children = {
                 Box(Modifier.layoutId(0)) { left.value?.screenContent() }
                 Box(Modifier.layoutId(1).drawShadow(Dp(8f))) { right.value?.screenContent() }
