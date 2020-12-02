@@ -1,9 +1,9 @@
 package cn.modificator.demo.ui
 
-import androidx.compose.foundation.Icon
+import androidx.compose.material.Icon
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.ScrollableRow
-import androidx.compose.foundation.Text
+import androidx.compose.material.Text
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold

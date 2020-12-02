@@ -2,7 +2,7 @@ package cn.modificator.demo.ui.widgets
 
 import androidx.compose.animation.animatedFloat
 import androidx.compose.animation.core.ExponentialDecay
-import androidx.compose.foundation.Text
+import androidx.compose.material.Text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.layout.Arrangement
