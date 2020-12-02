@@ -8,8 +8,8 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import cn.modificator.demo.PageController
 import cn.modificator.demo.R
+import com.patchself.compose.navigator.PageController
 
 class HomeController : PageController() {
     override fun getId(): Int {

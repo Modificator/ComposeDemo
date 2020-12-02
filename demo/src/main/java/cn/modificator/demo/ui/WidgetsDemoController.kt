@@ -12,10 +12,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import cn.modificator.demo.PageController
 import cn.modificator.demo.R
 import cn.modificator.demo.ui.widgets.ButtonShowController
 import cn.modificator.demo.ui.widgets.ViewPagerController
+import com.patchself.compose.navigator.PageController
 
 class WidgetsDemoController : PageController() {
     override fun getId(): Int {

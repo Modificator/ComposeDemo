@@ -1,13 +1,10 @@
 package cn.modificator.demo
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedTask
-import androidx.compose.runtime.launchInComposition
 import androidx.ui.tooling.preview.Preview
 import cn.modificator.demo.theme.DemoTheme
 import cn.modificator.demo.ui.HomeController
-import cn.modificator.demo.ui.SplashController
-import kotlinx.coroutines.delay
+import com.patchself.compose.navigator.navigationController
 
 @Composable
 fun DemoApp() {
@@ -19,10 +16,6 @@ fun DemoApp() {
 @Preview
 @Composable
 fun AppContent() {
+    navigationController.initController(HomeController())
     navigationController.viewContent()
-    LaunchedTask(block = {
-        delay(100)
-//        navigationController.initController(SplashController())
-        navigationController.initController(HomeController())
-    })
 }

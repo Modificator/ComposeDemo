@@ -14,8 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import cn.modificator.demo.PageController
 import cn.modificator.demo.R
+import com.patchself.compose.navigator.PageController
 
 class FlutterDemoController: PageController() {
 

@@ -10,8 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import androidx.ui.tooling.preview.Preview
-import cn.modificator.demo.PageController
 import cn.modificator.demo.R
+import com.patchself.compose.navigator.PageController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

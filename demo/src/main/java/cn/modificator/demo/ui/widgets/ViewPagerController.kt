@@ -10,18 +10,18 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.state
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Layout
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.WithConstraints
 import androidx.compose.ui.gesture.scrollorientationlocking.Orientation
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.WithConstraints
 import androidx.compose.ui.layout.id
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.util.fastForEach
 import androidx.compose.ui.util.fastMaxBy
-import cn.modificator.demo.PageController
+import com.patchself.compose.navigator.PageController
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
@@ -48,7 +48,7 @@ class ViewPagerController : PageController() {
 fun ViewPager(pageCount: Int, modifier: Modifier, pageCreater: @Composable (position: Int) -> Unit) {
     WithConstraints {
         val offset = animatedFloat(initVal = 0f)
-        val position = state { 0 }
+        val position = mutableStateOf(0)
         val width = constraints.maxWidth.toFloat()
         val draggable = modifier.draggable(
                 orientation = Orientation.Horizontal,
