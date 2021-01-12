@@ -1,7 +1,7 @@
 package cn.modificator.demo
 
 import androidx.compose.runtime.Composable
-import androidx.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 import cn.modificator.demo.theme.DemoTheme
 import cn.modificator.demo.ui.HomeController
 import com.patchself.compose.navigator.navigationController
@@ -17,5 +17,5 @@ fun DemoApp() {
 @Composable
 fun AppContent() {
     navigationController.initController(HomeController())
-    navigationController.viewContent()
+    navigationController.ViewContent()
 }

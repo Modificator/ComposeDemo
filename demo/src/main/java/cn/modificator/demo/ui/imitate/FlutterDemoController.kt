@@ -30,12 +30,12 @@ class FlutterDemoController: PageController() {
         Scaffold(topBar = {
             TopAppBar(title = { Text(text = "Welcom to Compose", color = Color.White) }, actions = {
                 IconButton(onClick = { navigateBack() }) {
-                    Icon(asset = Icons.Filled.Close, tint = Color.White)
+                    Icon(Icons.Filled.Close, tint = Color.White)
                 }
             }, elevation = 4.dp, backgroundColor = Color.Blue)
         }, floatingActionButton = {
             FloatingActionButton(onClick = { _counter++ }) {
-                Icon(asset = Icons.Default.Add)
+                Icon(Icons.Default.Add)
             }
         }) {
             Column(verticalArrangement = Arrangement.Center,horizontalAlignment = Alignment.CenterHorizontally,modifier = Modifier.fillMaxSize()) {

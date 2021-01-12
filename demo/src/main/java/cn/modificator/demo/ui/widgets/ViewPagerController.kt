@@ -19,8 +19,6 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.WithConstraints
 import androidx.compose.ui.layout.id
 import androidx.compose.ui.layout.layoutId
-import androidx.compose.ui.util.fastForEach
-import androidx.compose.ui.util.fastMaxBy
 import com.patchself.compose.navigator.PageController
 import kotlin.math.abs
 import kotlin.math.max
@@ -86,7 +84,7 @@ fun ViewPager(pageCount: Int, modifier: Modifier, pageCreater: @Composable (posi
                 enabled = true
         )
         Box(draggable) {
-            Layout(children = {
+            Layout(content = {
                 for (i in 0 until pageCount) {
                     Box(Modifier.layoutId(i)){
                         pageCreater(i)
@@ -94,9 +92,9 @@ fun ViewPager(pageCount: Int, modifier: Modifier, pageCreater: @Composable (posi
                 }
             }, measureBlock ={ list, constraints ->
                 val placeables = list.map { it.measure(constraints) to it.id }
-                val height = placeables.fastMaxBy { it.first.height }?.first?.height ?: 0
+                val height = placeables.maxByOrNull { it.first.height }?.first?.height ?: 0
                 layout(constraints.maxWidth, height) {
-                    placeables.fastForEach {(placeable, tag) ->
+                    placeables.forEach {(placeable, tag) ->
                         if (tag is Int) {
                             placeable.place(
                                     x = constraints.maxWidth * tag + offset.value.toInt(),

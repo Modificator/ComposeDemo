@@ -28,7 +28,7 @@ class WidgetsDemoController : PageController() {
             TopAppBar(title = { Text(text = "Widgets Demo") },
                 navigationIcon = {
                     IconButton(onClick = { navigateBack() }) {
-                        Icon(asset = Icons.Filled.ArrowBack)
+                        Icon(Icons.Filled.ArrowBack)
                     }
                 })
         }) {

@@ -1,13 +1,9 @@
 package cn.modificator.demo.ui
 
-import androidx.compose.material.Icon
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.ScrollableRow
-import androidx.compose.material.Text
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -28,7 +24,7 @@ class ImitateAppController : PageController() {
             TopAppBar(title = { Text(text = "Imitate other Apps") },
                 navigationIcon = {
                     IconButton(onClick = { navigateBack() }) {
-                        Icon(asset = Icons.Filled.ArrowBack)
+                        Icon(Icons.Filled.ArrowBack)
                     }
                 })
         }) {

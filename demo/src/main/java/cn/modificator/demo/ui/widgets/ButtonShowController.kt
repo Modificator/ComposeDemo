@@ -14,14 +14,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawOpacity
-import androidx.compose.ui.drawLayer
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
-import androidx.ui.tooling.preview.Preview
 import com.patchself.compose.navigator.PageController
 
 class ButtonShowController : PageController() {
@@ -41,7 +41,7 @@ class ButtonShowController : PageController() {
         Scaffold(topBar = {
             TopAppBar(title = { Text(text = "Button") }, navigationIcon = {
                 IconButton(onClick = { navigateBack() }) {
-                    Icon(asset = Icons.Filled.ArrowBack)
+                    Icon(Icons.Filled.ArrowBack)
                 }
             })
         }) {
@@ -78,9 +78,9 @@ class ButtonShowController : PageController() {
                         )
                         val opacity = animate(if (toggleButtonIndex == 0) 1f else 0.5f)
                         Icon(
-                            asset = Icons.Default.Share,
+                            Icons.Default.Share,
                             tint = tint,
-                            modifier = Modifier.drawOpacity(opacity = opacity)
+                            modifier = Modifier.alpha(opacity)
                         )
                     }
                     IconToggleButton(
@@ -91,9 +91,9 @@ class ButtonShowController : PageController() {
                         )
                         val opacity = animate(if (toggleButtonIndex == 1) 1f else 0.5f)
                         Icon(
-                            asset = Icons.Default.Add,
+                            Icons.Default.Add,
                             tint = tint,
-                            modifier = Modifier.drawOpacity(opacity = opacity)
+                            modifier = Modifier.alpha(opacity)
                         )
                     }
                     IconToggleButton(
@@ -104,9 +104,9 @@ class ButtonShowController : PageController() {
                         )
                         val opacity = animate(if (toggleButtonIndex == 2) 1f else 0.5f)
                         Icon(
-                            asset = Icons.Default.Send,
+                            Icons.Default.Send,
                             tint = tint,
-                            modifier = Modifier.drawOpacity(opacity = opacity)
+                            modifier = Modifier.alpha(opacity)
                         )
                     }
                 }
@@ -116,12 +116,12 @@ class ButtonShowController : PageController() {
                 Button(onClick = {}) {
                     Row(modifier = Modifier.wrapContentSize()) {
                         Image(
-                            asset = Icons.Filled.Search,
+                            Icons.Filled.Search,
                             colorFilter = ColorFilter.tint(Color.White)
                         )
                         Text(
                             text = "Button",
-                            modifier = Modifier.fillMaxHeight().gravity(Alignment.CenterVertically)
+                            modifier = Modifier.fillMaxHeight().align(Alignment.CenterVertically)
                         )
                     }
                 }
@@ -129,14 +129,14 @@ class ButtonShowController : PageController() {
                 Text(text = "Floating action button")
                 Spacer(modifier = Modifier.size(5.dp))
                 FloatingActionButton(onClick = {}) {
-                    Icon(asset = Icons.Default.Add)
+                    Icon(Icons.Default.Add)
                 }
                 Spacer(modifier = Modifier.size(10.dp))
                 Text(text = "Toggle button with animation")
                 Spacer(modifier = Modifier.size(5.dp))
                 IconToggleButton(checked = toggleState, onCheckedChange = { toggleState = it }) {
                     val rotateValue = animate(if (toggleState) 45f else 0f)
-                    Icon(asset = Icons.Filled.Add, modifier = Modifier.drawLayer(rotationZ = rotateValue))
+                    Icon(Icons.Filled.Add, modifier = Modifier.rotate(rotateValue))
                 }
                 Spacer(modifier = Modifier.size(10.dp))
                 Text(text = "RoundedCornerShape")
